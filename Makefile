@@ -167,6 +167,12 @@ codegen-envoy-docs: ## Generate markdown docs for envoy authz-server command
 	@rm -f ./website/docs/server/envoy/commands.md
 	@go run ./website/commands -out ./website/docs/server/envoy -format markdown -frontmatter -command "serve envoy authz-server" -output-file commands.md
 
+.PHONY: codegen-http-docs
+codegen-http-docs: ## Generate markdown docs for http authz-server command
+	@echo Generate http docs... >&2
+	@rm -f ./website/docs/server/http/commands.md
+	@go run ./website/commands -out ./website/docs/server/http -format markdown -frontmatter -command "serve http authz-server" -output-file commands.md
+
 .PHONY: codegen-mkdocs
 codegen-mkdocs: ## Generate mkdocs website
 codegen-mkdocs: codegen-api-docs
@@ -214,6 +220,7 @@ codegen: codegen-mkdocs
 codegen: codegen-schemas-openapi
 codegen: codegen-schemas-json
 codegen: codegen-envoy-docs
+codegen: codegen-http-docs
 
 .PHONY: verify-codegen
 verify-codegen: ## Verify all generated code and docs are up to date
