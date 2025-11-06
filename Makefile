@@ -160,6 +160,13 @@ codegen-cli-docs: ## Generate markdown CLI docs
 	@rm -rf ./website/docs/reference/commands
 	@go run ./website/commands -out ./website/docs/reference/commands -format markdown -frontmatter
 
+
+.PHONY: codegen-envoy-docs
+codegen-envoy-docs: ## Generate markdown docs for envoy authz-server command
+	@echo Generate envoy docs... >&2
+	@rm -f ./website/docs/server/envoy/commands.md
+	@go run ./website/commands -out ./website/docs/server/envoy -format markdown -frontmatter -command "serve envoy authz-server" -output-file commands.md
+
 .PHONY: codegen-mkdocs
 codegen-mkdocs: ## Generate mkdocs website
 codegen-mkdocs: codegen-api-docs
@@ -202,11 +209,11 @@ codegen: codegen-crds
 codegen: codegen-helm-crds
 codegen: codegen-proto
 codegen: codegen-helm-docs
-codegen: codegen-api-docs
 codegen: codegen-cli-docs
 codegen: codegen-mkdocs
 codegen: codegen-schemas-openapi
 codegen: codegen-schemas-json
+codegen: codegen-envoy-docs
 
 .PHONY: verify-codegen
 verify-codegen: ## Verify all generated code and docs are up to date
