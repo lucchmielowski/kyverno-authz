@@ -45,7 +45,3 @@ kyverno-authz serve envoy authz-server [flags]
       --probes-address string                Address to listen on for health checks (default ":9080")
 ```
 
-### SEE ALSO
-
-* [kyverno-authz serve envoy](kyverno-authz_serve_envoy.md)	 - Run Kyverno Envoy servers
-

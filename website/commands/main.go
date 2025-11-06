@@ -9,7 +9,6 @@ import (
 	"strings"
 
 	"github.com/kyverno/kyverno-authz/pkg/commands/root"
-	"github.com/spf13/cobra"
 	"github.com/spf13/cobra/doc"
 )
 
@@ -33,7 +32,7 @@ func main() {
 	rootCmd.DisableAutoGenTag = true // stable, reproducible files (no timestamp footer)
 
 	// If a specific command path is provided, find and use that command instead
-	var targetCmd *cobra.Command = rootCmd
+	targetCmd := rootCmd
 	if *cmdPath != "" {
 		parts := strings.Fields(*cmdPath)
 		for _, part := range parts {
@@ -74,7 +73,7 @@ func main() {
 			if err != nil {
 				log.Fatal(err)
 			}
-			defer file.Close()
+			defer closeFile(file)
 
 			if *front {
 				base := filepath.Base(*outputFile)
@@ -118,5 +117,11 @@ func main() {
 		}
 	default:
 		log.Fatalf("unknown format: %s", *format)
+	}
+}
+
+func closeFile(file *os.File) {
+	if err := file.Close(); err != nil {
+		log.Fatal(err)
 	}
 }

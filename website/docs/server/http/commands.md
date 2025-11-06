@@ -53,7 +53,3 @@ kyverno-authz serve http authz-server [flags]
       --server-address string                      Address to serve the http authorization server on (default ":9083")
 ```
 
-### SEE ALSO
-
-* [kyverno-authz serve http](kyverno-authz_serve_http.md)	 - Run Kyverno HTTP servers
-
