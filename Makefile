@@ -144,6 +144,35 @@ codegen-cli-docs: ## Generate markdown CLI docs
 	@rm -rf ./website/docs/reference/commands
 	@go run ./website/commands -out ./website/docs/reference/commands -format markdown -frontmatter
 
+
+.PHONY: codegen-envoy-docs
+codegen-envoy-docs: ## Generate markdown docs for envoy authz-server command
+	@echo Generate envoy docs... >&2
+	@rm -f ./website/docs/server/envoy/commands.md
+	@go run ./website/commands -out ./website/docs/server/envoy -format markdown -frontmatter -command "serve envoy authz-server" -output-file commands.md
+	@$(SED) -i '/^### SEE ALSO/,$$d' ./website/docs/server/envoy/commands.md
+
+.PHONY: codegen-envoy-webhook-docs
+codegen-envoy-webhook-docs: ## Generate markdown docs for envoy validation-webhook command
+	@echo Generate envoy webhook docs... >&2
+	@rm -f ./website/docs/server/envoy/kyverno-authz_serve_envoy_validation-webhook.md
+	@go run ./website/commands -out ./website/docs/server/envoy -format markdown -frontmatter -command "serve envoy validation-webhook" -output-file webhook.md
+	@$(SED) -i '/^### SEE ALSO/,$$d' ./website/docs/server/envoy/webhook.md
+
+.PHONY: codegen-http-docs
+codegen-http-docs: ## Generate markdown docs for http authz-server command
+	@echo Generate http docs... >&2
+	@rm -f ./website/docs/server/http/commands.md
+	@go run ./website/commands -out ./website/docs/server/http -format markdown -frontmatter -command "serve http authz-server" -output-file commands.md
+	@$(SED) -i '/^### SEE ALSO/,$$d' ./website/docs/server/http/commands.md
+
+.PHONY: codegen-http-webhook-docs
+codegen-http-webhook-docs: ## Generate markdown docs for http validation-webhook command
+	@echo Generate http webhook docs... >&2
+	@rm -f ./website/docs/server/http/kyverno-authz_serve_http_validation-webhook.md
+	@go run ./website/commands -out ./website/docs/server/http -format markdown -frontmatter -command "serve http validation-webhook" -output-file webhook.md
+	@$(SED) -i '/^### SEE ALSO/,$$d' ./website/docs/server/http/webhook.md
+
 .PHONY: codegen-mkdocs
 codegen-mkdocs: ## Generate mkdocs website
 codegen-mkdocs: codegen-api-docs
@@ -157,9 +186,12 @@ codegen: ## Rebuild all generated code and docs
 codegen: codegen-crds
 codegen: codegen-proto
 codegen: codegen-helm-docs
-codegen: codegen-api-docs
 codegen: codegen-cli-docs
 codegen: codegen-mkdocs
+codegen: codegen-envoy-docs
+codegen: codegen-envoy-webhook-docs
+codegen: codegen-http-docs
+codegen: codegen-http-webhook-docs
 
 .PHONY: verify-codegen
 verify-codegen: ## Verify all generated code and docs are up to date
