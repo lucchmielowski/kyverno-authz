@@ -13,6 +13,7 @@ import (
 	jsoncel "github.com/kyverno/kyverno-authz/pkg/cel/libs/json"
 	"github.com/kyverno/kyverno-authz/pkg/cel/libs/jwt"
 	"github.com/kyverno/kyverno-authz/pkg/cel/libs/mcp"
+	yamlcel "github.com/kyverno/kyverno-authz/pkg/cel/libs/yaml"
 	"github.com/kyverno/kyverno/pkg/cel/libs/http"
 	"github.com/kyverno/kyverno/pkg/cel/libs/image"
 	"github.com/kyverno/kyverno/pkg/cel/libs/imagedata"
@@ -76,6 +77,7 @@ func NewEnv(evalMode vpol.EvaluationMode) (*cel.Env, error) {
 		jwt.Lib(),
 		jsoncel.Lib(&impl.JsonImpl{}),
 		mcp.Lib(&impl.MCPImpl{}),
+		yamlcel.Lib(&impl.YamlImpl{}),
 		resource.Lib("", nil),
 		image.Lib(nil),
 		imagedata.Lib(nil),
