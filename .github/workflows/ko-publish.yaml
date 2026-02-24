@@ -27,6 +27,7 @@ jobs:
         run: |
           set -e
           REGISTRY=ghcr.io \
+          REPO=${{ github.repository_owner }} \
           REGISTRY_USERNAME=${{ github.actor }} \
           REGISTRY_PASSWORD=${{ secrets.GITHUB_TOKEN }} \
           make ko-publish

@@ -21,7 +21,7 @@ builds:
 kos:
   - build: kyverno-authz
     repositories:
-    - ghcr.io/kyverno/kyverno-authz
+    - ghcr.io/{{ .Env.IMAGE_OWNER }}/kyverno-authz
     tags:
       - '{{ .Tag }}'
       - '{{ if not .Prerelease }}latest{{ end }}' 
